@@ -325,11 +325,15 @@ button.scrollRow_controller_button > svg {
     padding-left: 10%;
 }
 
-.scrollRow_peak-left .scrollRow_peak_background {
+.scrollRow_peak_background {
+    background: var(--peak-colour);
+}
+
+.scrollRow_peak-left .scrollRow_peak_backgroundGradient {
     background: linear-gradient(90deg, var(--peak-colour), transparent);
 }
 
-.scrollRow_peak-right .scrollRow_peak_background {
+.scrollRow_peak-right .scrollRow_peak_backgroundGradient {
     background: linear-gradient(90deg, transparent, var(--peak-colour));
 }
 
