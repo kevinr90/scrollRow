@@ -36,8 +36,8 @@
     --gap: var(--gap-xs);
 
     --peak-colour: #141414;
-    --peak-opacity: 1;
-    --peak-opacity-hover: 0.75;
+    --peak-opacity: 0.66;
+    --peak-opacity-hover: 0.33;
 
     --peak-width-xs: 2.5rem;
     --peak-width-sm: var(--peak-width-xs);
