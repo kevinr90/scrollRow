@@ -1,0 +1,346 @@
+/* SCROLLER */
+
+.scrollRow {
+    position: relative;
+
+    --container-width-xs: 100%;
+    --container-width-sm: var(--container-width-xs);
+    --container-width-md: var(--container-width-sm);
+    --container-width-lg: var(--container-width-md);
+    --container-width-xl: var(--container-width-lg);
+    --container-width-xxl: var(--container-width-xl);
+    --container-width: var(--container-width-xs);
+
+    --container-width-bleed-xs: 100%;
+    --container-width-bleed-sm: 540px;
+    --container-width-bleed-md: 720px;
+    --container-width-bleed-lg: 960px;
+    --container-width-bleed-xl: 1140px;
+    --container-width-bleed-xxl: 1320px;
+    --container-width-bleed: var(--container-width-bleed-xs);
+
+    --container-padding-xs: 0.75em;
+    --container-padding-sm: var(--container-padding-xs);
+    --container-padding-md: var(--container-padding-sm);
+    --container-padding-lg: var(--container-padding-md);
+    --container-padding-xl: var(--container-padding-lg);
+    --container-padding-xxl: var(--container-padding-xl);
+    --container-padding: var(--container-padding-xs);
+
+    --gap-xs: 0.5em;
+    --gap-sm: var(--gap-xs);
+    --gap-md: var(--gap-sm);
+    --gap-lg: var(--gap-md);
+    --gap-xl: var(--gap-lg);
+    --gap-xxl: var(--gap-xl);
+    --gap: var(--gap-xs);
+
+    --peak-colour: #141414;
+    --peak-opacity: 1;
+    --peak-opacity-hover: 0.75;
+
+    --peak-width-xs: 2.5rem;
+    --peak-width-sm: var(--peak-width-xs);
+    --peak-width-md: var(--peak-width-sm);
+    --peak-width-lg: var(--peak-width-md);
+    --peak-width-xl: var(--peak-width-lg);
+    --peak-width-xxl: var(--peak-width-xl);
+    --peak-width: var(--peak-width-xs);
+
+    --peak-disabled-opacity: 0;
+    --peak-disabled-width: 0;
+
+    --arrow-width-xs: 2.5rem;
+    --arrow-width-sm: var(--arrow-width-xs);
+    --arrow-width-md: var(--arrow-width-sm);
+    --arrow-width-lg: var(--arrow-width-md);
+    --arrow-width-xl: var(--arrow-width-lg);
+    --arrow-width-xxl: var(--arrow-width-xl);
+    --arrow-width: var(--arrow-width-xs);
+
+    --button-colour: #333;
+    --button-colour-hover: #333;
+    --arrow-colour: #fff;
+    --arrow-colour-hover: #f2cc01;
+
+    --align-xs: center;
+    --align-sm: start;
+    --align-md: var(--align-sm);
+    --align-lg: var(--align-md);
+    --align-xl: var(--align-lg);
+    --align-xxl: var(--align-xl);
+    --align: var(--align-xs);
+
+    --items-xs: 1.2;
+    --items-sm: var(--items-xs);
+    --items-md: var(--items-sm);
+    --items-lg: var(--items-md);
+    --items-xl: var(--items-lg);
+    --items-xxl: var(--items-xl);
+    --items: var(--items-xs);
+
+    --sum-gap: calc(((var(--items) - 1)) * var(--gap));
+    --sum-margin: calc((2 * var(--container-margin)));
+    --sum-padding: calc((2 * var(--container-padding)));
+    --sum-arrows: calc((2 * var(--peak-width)));
+    --container-space: calc((var(--sum-gap) + var(--sum-arrows)));
+    --item-container-width: calc((var(--container-width) + var(--sum-padding)));
+    --item-width: calc(((var(--item-container-width) - var(--container-space)) / var(--items)));
+
+    --container-margin: 0px;
+
+    --scroll-padding-xs: 0px;
+    --scroll-padding-sm: var(--peak-width);
+    --scroll-padding-md: var(--scroll-padding-sm);
+    --scroll-padding-lg: var(--scroll-padding-md);
+    --scroll-padding-xl: var(--scroll-padding-lg);
+    --scroll-padding-xxl: var(--scroll-padding-xl);
+    --scroll-padding: var( --scroll-padding-xs);
+}
+
+/* Hide scrollbars */
+
+.scrollRow_inner { 
+    scrollbar-width: none;
+    -ms-overflow-style: none; 
+}
+.scrollRow_inner::-webkit-scrollbar { display: none; }
+.scrollRow_inner::-webkit-scrollbar-button { display: none; }
+
+/* Styles */
+
+.scrollRow[data-scrollrow-status="inactive"] {
+    --container-space: calc((var(--sum-gap) + var(--sum-padding))) !important;
+}
+
+.scrollRow.scrollRow-bleed {
+    --container-width: var(--container-width-bleed);
+    --container-margin: calc(((100% - var(--container-width)) / 2));
+    --container-space: calc((var(--sum-gap) + var(--sum-padding)));
+    --peak-width: calc((var(--container-margin) + var(--container-padding)));
+    --item-container-width: calc(var(--container-width));
+    --peak-disabled-opacity: 1;
+    --peak-disabled-width: var(--peak-width);
+}
+
+@media (min-width: 576px) {
+    .scrollRow {
+        --container-width-bleed: var(--container-width-bleed-sm);
+        --container-width: var(--container-width-sm);
+        --container-padding: var(--container-padding-sm);
+        --peak-width: var(--peak-width-sm);
+        --items: var(--items-sm);
+        --align: var(--align-sm);
+        --scroll-padding: var(--scroll-padding-sm);
+    }
+    .scrollRow.scrollRow-bleed-sm {
+        --container-width: var(--container-width-bleed);
+        --container-margin: calc(((100% - var(--container-width)) / 2));
+        --container-space: calc((var(--sum-gap) + var(--sum-padding)));
+        --peak-width: calc((var(--container-margin) + var(--container-padding)));
+        --item-container-width: calc(var(--container-width));
+        --peak-disabled-opacity: 1;
+        --peak-disabled-width: var(--peak-width);
+    }
+}
+
+@media (min-width: 768px) {
+    .scrollRow {
+        --container-width: var(--container-width-md);
+        --container-width-bleed: var(--container-width-bleed-md);
+        --container-padding: var(--container-padding-md);
+        --peak-width: var(--peak-width-md);
+        --items: var(--items-md);
+        --align: var(--align-md);
+        --scroll-padding: var(--scroll-padding-md);
+    }
+    .scrollRow.scrollRow-bleed-md {
+        --container-width: var(--container-width-bleed);
+        --container-margin: calc(((100% - var(--container-width)) / 2));
+        --container-space: calc((var(--sum-gap) + var(--sum-padding)));
+        --peak-width: calc((var(--container-margin) + var(--container-padding)));
+        --item-container-width: calc(var(--container-width));
+        --peak-disabled-opacity: 1;
+        --peak-disabled-width: var(--peak-width);
+    }
+}
+
+@media (min-width: 992px) {
+    .scrollRow {
+        --container-width: var(--container-width-lg);
+        --container-width-bleed: var(--container-width-bleed-lg);
+        --container-padding: var(--container-padding-lg);
+        --peak-width: var(--peak-width-lg);
+        --items: var(--items-lg);
+        --align: var(--align-lg);
+        --scroll-padding: var(--scroll-padding-lg);
+    }
+    .scrollRow.scrollRow-bleed-lg {
+        --container-width: var(--container-width-bleed);
+        --container-margin: calc(((100% - var(--container-width)) / 2));
+        --container-space: calc((var(--sum-gap) + var(--sum-padding)));
+        --peak-width: calc((var(--container-margin) + var(--container-padding)));
+        --item-container-width: calc(var(--container-width));
+        --peak-disabled-opacity: 1;
+        --peak-disabled-width: var(--peak-width);
+    }
+}
+
+@media (min-width: 1200px) {
+    .scrollRow {
+        --container-width: var(--container-width-xl);
+        --container-width-bleed: var(--container-width-bleed-xl);
+        --container-padding: var(--container-padding-xl);
+        --peak-width: var(--peak-width-xl);
+        --items: var(--items-xl);
+        --align: var(--align-xl);
+        --scroll-padding: var(--scroll-padding-xl);
+    }
+    .scrollRow.scrollRow-bleed-xl {
+        --container-width: var(--container-width-bleed);
+        --container-margin: calc(((100% - var(--container-width)) / 2));
+        --container-space: calc((var(--sum-gap) + var(--sum-padding)));
+        --peak-width: calc((var(--container-margin) + var(--container-padding)));
+        --item-container-width: calc(var(--container-width));
+        --peak-disabled-opacity: 1;
+        --peak-disabled-width: var(--peak-width);
+    }
+}
+
+@media (min-width: 1400px) {
+    .scrollRow {
+        --container-width: var(--container-width-xxl);
+        --container-width-bleed: var(--container-width-bleed-xxl);
+        --container-padding: var(--container-padding-xxl);
+        --peak-width: var(--peak-width-xxl);
+        --items: var(--items-xxl);
+        --align: var(--align-xxl);
+        --scroll-padding: var(--scroll-padding-xxl);
+    }
+    .scrollRow.scrollRow-bleed-xxl {
+        --container-width: var(--container-width-bleed);
+        --container-margin: calc(((100% - var(--container-width)) / 2));
+        --container-space: calc((var(--sum-gap) + var(--sum-padding)));
+        --peak-width: calc((var(--container-margin) + var(--container-padding)));
+        --item-container-width: calc(var(--container-width));
+        --peak-disabled-opacity: 1;
+        --peak-disabled-width: var(--peak-width);
+    }
+}
+
+/* Styles */
+
+.scrollRow_inner {
+    width: 100%;
+    margin: 0;
+    padding: 0 calc((var(--container-padding) + var(--container-margin)));
+
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--gap);
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scroll-snap-align: var(--align);
+    scroll-padding-left: var(--scroll-padding);
+}
+
+.scrollRow_col {
+    width: var(--item-width);
+    max-width: var(--item-width);
+    min-width: var(--item-width);
+    flex: var(--item-width);
+    scroll-snap-align: var(--align);
+    z-index: 1;
+}
+
+.scrollRow_peak {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: var(--peak-width);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: all 0.2s ease-in-out;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.scrollRow_peak-right {
+    right: 0;
+    left: auto;
+}
+
+.scrollRow_peak_background {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: var(--peak-colour);
+    opacity: var(--peak-opacity);
+    z-index: 3;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.scrollRow_peak:hover .scrollRow_peak_background {
+    opacity: var(--peak-opacity-hover);
+}
+
+.scrollRow_controller_button {
+    width: 80%;
+    max-width: var(--arrow-width);
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: none;
+    z-index: 4;
+    margin: 0.5rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--button-colour);
+    color: var(--arrow-colour);
+}
+
+.scrollRow_controller_button:hover {
+    background: var(--button-colour-hover);
+    color: var(--arrow-colour-hover);
+}
+
+button.scrollRow_controller_button > svg {
+    width: 75%;
+    height: 100%;
+}
+
+.scrollRow_peak-left svg.bi-chevron-left {
+    padding-right: 10%;
+}
+
+.scrollRow_peak-left svg.bi-chevron-right {
+    padding-left: 10%;
+}
+
+.scrollRow_peak-left .scrollRow_peak_background {
+    background: linear-gradient(90deg, var(--peak-colour), transparent);
+}
+
+.scrollRow_peak-right .scrollRow_peak_background {
+    background: linear-gradient(90deg, transparent, var(--peak-colour));
+}
+
+/* Peak disabled styles */
+
+.scrollRow .scrollRow_peak[data-scrollrow-controller-state="disabled"] {
+    width: var(--peak-disabled-width);
+    opacity: var(--peak-disabled-opacity);
+    cursor: default;
+}
+
+.scrollRow_peak[data-scrollrow-controller-state="disabled"] .scrollRow_controller_button {
+    opacity: 0;
+}
