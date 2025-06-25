@@ -54,3 +54,22 @@
     });
   });
 })();
+
+window.scrollRow = {}
+window.scrollRow.refreshOne = function(targetEl) {
+  const containerEl = targetEl.closest('.scrollRow');
+  const scrollRowInnerEl = containerEl.querySelector('.scrollRow_inner')
+  const controllerLeft = containerEl.querySelector('.scrollRow_controller[data-scrollrow-controller-direction="left"]');
+  const controllerRight = containerEl.querySelector('.scrollRow_controller[data-scrollrow-controller-direction="right"]');
+  const scrollLeft = scrollRowInnerEl.scrollLeft;
+  const maxScrollLeft = scrollRowInnerEl.scrollWidth - scrollRowInnerEl.clientWidth;
+  if (controllerLeft) controllerLeft.dataset.scrollrowControllerState = scrollLeft <= 0 ? 'disabled' : 'enabled';
+  if (controllerRight) controllerRight.dataset.scrollrowControllerState = scrollLeft >= maxScrollLeft - 1 ? 'disabled' : 'enabled';
+  return true;
+}
+window.scrollRow.refreshAll = function() {
+  var els = document.querySelectorAll('.scrollRow')
+  els.forEach(function(el) {
+    window.scrollRow.refreshOne(el)
+  })  
+}
