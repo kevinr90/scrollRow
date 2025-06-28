@@ -126,7 +126,7 @@
 
 @media (min-width: 576px) {
     .scrollRow {
-        --container-width-bleed: var(--container-width-bleed-sm);
+        --container-width-bootstrap: var(--container-width-bootstrap-sm);
         --container-width: var(--container-width-sm);
         --container-padding: var(--container-padding-sm);
         --peak-width: var(--peak-width-sm);
@@ -134,8 +134,8 @@
         --align: var(--align-sm);
         --scroll-padding: var(--scroll-padding-sm);
     }
-    .scrollRow.scrollRow-bleed-sm {
-        --container-width: var(--container-width-bleed);
+    .scrollRow.scrollRow-bootstrap-sm {
+        --container-width: var(--container-width-bootstrap);
         --container-margin: calc(((100% - var(--container-width)) / 2));
         --container-space: calc((var(--sum-gap) + var(--sum-padding)));
         --peak-width: calc((var(--container-margin) + var(--container-padding)));
@@ -148,15 +148,15 @@
 @media (min-width: 768px) {
     .scrollRow {
         --container-width: var(--container-width-md);
-        --container-width-bleed: var(--container-width-bleed-md);
+        --container-width-bootstrap: var(--container-width-bootstrap-md);
         --container-padding: var(--container-padding-md);
         --peak-width: var(--peak-width-md);
         --items: var(--items-md);
         --align: var(--align-md);
         --scroll-padding: var(--scroll-padding-md);
     }
-    .scrollRow.scrollRow-bleed-md {
-        --container-width: var(--container-width-bleed);
+    .scrollRow.scrollRow-bootstrap-md {
+        --container-width: var(--container-width-bootstrap);
         --container-margin: calc(((100% - var(--container-width)) / 2));
         --container-space: calc((var(--sum-gap) + var(--sum-padding)));
         --peak-width: calc((var(--container-margin) + var(--container-padding)));
@@ -169,15 +169,15 @@
 @media (min-width: 992px) {
     .scrollRow {
         --container-width: var(--container-width-lg);
-        --container-width-bleed: var(--container-width-bleed-lg);
+        --container-width-bootstrap: var(--container-width-bootstrap-lg);
         --container-padding: var(--container-padding-lg);
         --peak-width: var(--peak-width-lg);
         --items: var(--items-lg);
         --align: var(--align-lg);
         --scroll-padding: var(--scroll-padding-lg);
     }
-    .scrollRow.scrollRow-bleed-lg {
-        --container-width: var(--container-width-bleed);
+    .scrollRow.scrollRow-bootstrap-lg {
+        --container-width: var(--container-width-bootstrap);
         --container-margin: calc(((100% - var(--container-width)) / 2));
         --container-space: calc((var(--sum-gap) + var(--sum-padding)));
         --peak-width: calc((var(--container-margin) + var(--container-padding)));
@@ -190,15 +190,15 @@
 @media (min-width: 1200px) {
     .scrollRow {
         --container-width: var(--container-width-xl);
-        --container-width-bleed: var(--container-width-bleed-xl);
+        --container-width-bootstrap: var(--container-width-bootstrap-xl);
         --container-padding: var(--container-padding-xl);
         --peak-width: var(--peak-width-xl);
         --items: var(--items-xl);
         --align: var(--align-xl);
         --scroll-padding: var(--scroll-padding-xl);
     }
-    .scrollRow.scrollRow-bleed-xl {
-        --container-width: var(--container-width-bleed);
+    .scrollRow.scrollRow-bootstrap-xl {
+        --container-width: var(--container-width-bootstrap);
         --container-margin: calc(((100% - var(--container-width)) / 2));
         --container-space: calc((var(--sum-gap) + var(--sum-padding)));
         --peak-width: calc((var(--container-margin) + var(--container-padding)));
@@ -211,15 +211,15 @@
 @media (min-width: 1400px) {
     .scrollRow {
         --container-width: var(--container-width-xxl);
-        --container-width-bleed: var(--container-width-bleed-xxl);
+        --container-width-bootstrap: var(--container-width-bootstrap-xxl);
         --container-padding: var(--container-padding-xxl);
         --peak-width: var(--peak-width-xxl);
         --items: var(--items-xxl);
         --align: var(--align-xxl);
         --scroll-padding: var(--scroll-padding-xxl);
     }
-    .scrollRow.scrollRow-bleed-xxl {
-        --container-width: var(--container-width-bleed);
+    .scrollRow.scrollRow-bootstrap-xxl {
+        --container-width: var(--container-width-bootstrap);
         --container-margin: calc(((100% - var(--container-width)) / 2));
         --container-space: calc((var(--sum-gap) + var(--sum-padding)));
         --peak-width: calc((var(--container-margin) + var(--container-padding)));
