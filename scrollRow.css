@@ -80,14 +80,11 @@
     --items: var(--items-xs);
 
     --sum-gap: calc(((var(--items) - 1)) * var(--gap));
-    --sum-margin: calc((2 * var(--container-margin)));
     --sum-padding: calc((2 * var(--container-padding)));
     --sum-arrows: calc((2 * var(--peak-width)));
     --container-space: calc((var(--sum-gap) + var(--sum-arrows)));
     --item-container-width: calc((var(--container-width) + var(--sum-padding)));
     --item-width: calc(((var(--item-container-width) - var(--container-space)) / var(--items)));
-
-    --container-margin: 0px;
 
     --scroll-padding-xs: 0px;
     --scroll-padding-sm: var(--peak-width);
@@ -116,9 +113,8 @@
 .scrollRow.scrollRow-bootstrap {
     --container-width: var(--container-width-bootstrap);
     --container-padding: calc((100% - var(--container-width-bootstrap))/2);
-    --container-margin: calc(((100% - var(--container-width)) / 2));
     --container-space: calc((var(--sum-gap) + var(--sum-padding)));
-    --peak-width: calc((var(--container-margin) + var(--container-padding)));
+    --peak-width: var(--container-padding);
     --item-container-width: calc(var(--container-width));
     --peak-disabled-opacity: 1;
     --peak-disabled-width: var(--peak-width);
@@ -136,9 +132,8 @@
     }
     .scrollRow.scrollRow-bootstrap-sm {
         --container-width: var(--container-width-bootstrap);
-        --container-margin: calc(((100% - var(--container-width)) / 2));
         --container-space: calc((var(--sum-gap) + var(--sum-padding)));
-        --peak-width: calc((var(--container-margin) + var(--container-padding)));
+        --peak-width: var(--container-padding);
         --item-container-width: calc(var(--container-width));
         --peak-disabled-opacity: 1;
         --peak-disabled-width: var(--peak-width);
@@ -157,9 +152,8 @@
     }
     .scrollRow.scrollRow-bootstrap-md {
         --container-width: var(--container-width-bootstrap);
-        --container-margin: calc(((100% - var(--container-width)) / 2));
         --container-space: calc((var(--sum-gap) + var(--sum-padding)));
-        --peak-width: calc((var(--container-margin) + var(--container-padding)));
+        --peak-width: var(--container-padding));
         --item-container-width: calc(var(--container-width));
         --peak-disabled-opacity: 1;
         --peak-disabled-width: var(--peak-width);
@@ -178,9 +172,8 @@
     }
     .scrollRow.scrollRow-bootstrap-lg {
         --container-width: var(--container-width-bootstrap);
-        --container-margin: calc(((100% - var(--container-width)) / 2));
         --container-space: calc((var(--sum-gap) + var(--sum-padding)));
-        --peak-width: calc((var(--container-margin) + var(--container-padding)));
+        --peak-width: var(--container-padding);
         --item-container-width: calc(var(--container-width));
         --peak-disabled-opacity: 1;
         --peak-disabled-width: var(--peak-width);
@@ -199,9 +192,8 @@
     }
     .scrollRow.scrollRow-bootstrap-xl {
         --container-width: var(--container-width-bootstrap);
-        --container-margin: calc(((100% - var(--container-width)) / 2));
         --container-space: calc((var(--sum-gap) + var(--sum-padding)));
-        --peak-width: calc((var(--container-margin) + var(--container-padding)));
+        --peak-width: var(--container-padding);
         --item-container-width: calc(var(--container-width));
         --peak-disabled-opacity: 1;
         --peak-disabled-width: var(--peak-width);
@@ -220,9 +212,8 @@
     }
     .scrollRow.scrollRow-bootstrap-xxl {
         --container-width: var(--container-width-bootstrap);
-        --container-margin: calc(((100% - var(--container-width)) / 2));
         --container-space: calc((var(--sum-gap) + var(--sum-padding)));
-        --peak-width: calc((var(--container-margin) + var(--container-padding)));
+        --peak-width: var(--container-padding);
         --item-container-width: calc(var(--container-width));
         --peak-disabled-opacity: 1;
         --peak-disabled-width: var(--peak-width);
@@ -234,7 +225,7 @@
 .scrollRow_inner {
     width: 100%;
     margin: 0;
-    padding: 0 calc((var(--container-padding) + var(--container-margin)));
+    padding: 0 var(--container-padding);
 
     display: flex;
     flex-wrap: nowrap;
