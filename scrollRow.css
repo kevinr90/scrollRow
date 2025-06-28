@@ -11,13 +11,13 @@
     --container-width-xxl: var(--container-width-xl);
     --container-width: var(--container-width-xs);
 
-    --container-width-bleed-xs: 100%;
-    --container-width-bleed-sm: 540px;
-    --container-width-bleed-md: 720px;
-    --container-width-bleed-lg: 960px;
-    --container-width-bleed-xl: 1140px;
-    --container-width-bleed-xxl: 1320px;
-    --container-width-bleed: var(--container-width-bleed-xs);
+    --container-width-bootstrap-xs: calc(100% - 1.5rem);
+    --container-width-bootstrap-sm: 540px;
+    --container-width-bootstrap-md: 720px;
+    --container-width-bootstrap-lg: 960px;
+    --container-width-bootstrap-xl: 1140px;
+    --container-width-bootstrap-xxl: 1320px;
+    --container-width-bleed: var(--container-width-bootstrap-xs);
 
     --container-padding-xs: 0.75em;
     --container-padding-sm: var(--container-padding-xs);
@@ -113,8 +113,9 @@
     --container-space: calc((var(--sum-gap) + var(--sum-padding))) !important;
 }
 
-.scrollRow.scrollRow-bleed {
-    --container-width: var(--container-width-bleed);
+.scrollRow.scrollRow-bootstrap {
+    --container-width: var(--container-width-bootstrap);
+    --container-padding: calc((100% - var(--container-width-bootstrap))/2);
     --container-margin: calc(((100% - var(--container-width)) / 2));
     --container-space: calc((var(--sum-gap) + var(--sum-padding)));
     --peak-width: calc((var(--container-margin) + var(--container-padding)));
@@ -244,7 +245,7 @@
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     scroll-snap-align: var(--align);
-    scroll-padding-left: var(--scroll-padding);
+    scroll-padding-left: var(--container-padding);
 }
 
 .scrollRow_col {
