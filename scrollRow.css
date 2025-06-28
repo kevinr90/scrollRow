@@ -17,7 +17,7 @@
     --container-width-bootstrap-lg: 960px;
     --container-width-bootstrap-xl: 1140px;
     --container-width-bootstrap-xxl: 1320px;
-    --container-width-bleed: var(--container-width-bootstrap-xs);
+    --container-width-bootstrap: var(--container-width-bootstrap-xs);
 
     --container-padding-xs: 0.75em;
     --container-padding-sm: var(--container-padding-xs);
