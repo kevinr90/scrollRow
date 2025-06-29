@@ -40,7 +40,6 @@
     --peak-opacity-hover: 0.5;
 
     --peak-disabled-opacity: 0;
-    --peak-disabled-width: 0;
 
     --arrow-width-xs: 2.5rem;
     --arrow-width-sm: var(--arrow-width-xs);
@@ -268,7 +267,6 @@ button.scrollRow_controller_button > svg {
 /* Peak disabled styles */
 
 .scrollRow .scrollRow_peak[data-scrollrow-controller-state="disabled"] {
-    width: var(--peak-disabled-width);
     opacity: var(--peak-disabled-opacity);
     cursor: default;
 }
