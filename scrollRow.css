@@ -19,7 +19,7 @@
     --container-width-bootstrap-xxl: 1320px;
     --container-width-bootstrap: var(--container-width-bootstrap-xs);
 
-    --container-padding-xs: 0.75em;
+    --container-padding-xs: calc((100% - var(--container-width)) /2);
     --container-padding-sm: var(--container-padding-xs);
     --container-padding-md: var(--container-padding-sm);
     --container-padding-lg: var(--container-padding-md);
@@ -38,14 +38,6 @@
     --peak-colour: #141414;
     --peak-opacity: 0.66;
     --peak-opacity-hover: 0.5;
-
-    --peak-width-xs: 2.5rem;
-    --peak-width-sm: var(--peak-width-xs);
-    --peak-width-md: var(--peak-width-sm);
-    --peak-width-lg: var(--peak-width-md);
-    --peak-width-xl: var(--peak-width-lg);
-    --peak-width-xxl: var(--peak-width-xl);
-    --peak-width: var(--peak-width-xs);
 
     --peak-disabled-opacity: 0;
     --peak-disabled-width: 0;
@@ -81,18 +73,7 @@
 
     --sum-gap: calc(((var(--items) - 1)) * var(--gap));
     --sum-padding: calc((2 * var(--container-padding)));
-    --sum-arrows: calc((2 * var(--peak-width)));
-    --container-space: calc((var(--sum-gap) + var(--sum-arrows)));
-    --item-container-width: calc((var(--container-width) + var(--sum-padding)));
-    --item-width: calc(((var(--item-container-width) - var(--container-space)) / var(--items)));
-
-    --scroll-padding-xs: 0px;
-    --scroll-padding-sm: var(--peak-width);
-    --scroll-padding-md: var(--scroll-padding-sm);
-    --scroll-padding-lg: var(--scroll-padding-md);
-    --scroll-padding-xl: var(--scroll-padding-lg);
-    --scroll-padding-xxl: var(--scroll-padding-xl);
-    --scroll-padding: var( --scroll-padding-xs);
+    --item-width: calc((var(--container-width) - var(--sum-gap)) / var(--items));
 }
 
 /* Hide scrollbars */
@@ -106,18 +87,8 @@
 
 /* Styles */
 
-.scrollRow[data-scrollrow-status="inactive"] {
-    --container-space: calc((var(--sum-gap) + var(--sum-padding))) !important;
-}
-
 .scrollRow.scrollRow-bootstrap {
     --container-width: var(--container-width-bootstrap);
-    --container-padding: calc((100% - var(--container-width-bootstrap))/2);
-    --container-space: calc((var(--sum-gap) + var(--sum-padding)));
-    --peak-width: var(--container-padding);
-    --item-container-width: calc(var(--container-width));
-    --peak-disabled-opacity: 1;
-    --peak-disabled-width: var(--peak-width);
 }
 
 @media (min-width: 576px) {
@@ -125,18 +96,11 @@
         --container-width-bootstrap: var(--container-width-bootstrap-sm);
         --container-width: var(--container-width-sm);
         --container-padding: var(--container-padding-sm);
-        --peak-width: var(--peak-width-sm);
         --items: var(--items-sm);
         --align: var(--align-sm);
-        --scroll-padding: var(--scroll-padding-sm);
     }
     .scrollRow.scrollRow-bootstrap-sm {
         --container-width: var(--container-width-bootstrap);
-        --container-space: calc((var(--sum-gap) + var(--sum-padding)));
-        --peak-width: var(--container-padding);
-        --item-container-width: calc(var(--container-width));
-        --peak-disabled-opacity: 1;
-        --peak-disabled-width: var(--peak-width);
     }
 }
 
@@ -145,18 +109,11 @@
         --container-width: var(--container-width-md);
         --container-width-bootstrap: var(--container-width-bootstrap-md);
         --container-padding: var(--container-padding-md);
-        --peak-width: var(--peak-width-md);
         --items: var(--items-md);
         --align: var(--align-md);
-        --scroll-padding: var(--scroll-padding-md);
     }
     .scrollRow.scrollRow-bootstrap-md {
         --container-width: var(--container-width-bootstrap);
-        --container-space: calc((var(--sum-gap) + var(--sum-padding)));
-        --peak-width: var(--container-padding));
-        --item-container-width: calc(var(--container-width));
-        --peak-disabled-opacity: 1;
-        --peak-disabled-width: var(--peak-width);
     }
 }
 
@@ -165,18 +122,11 @@
         --container-width: var(--container-width-lg);
         --container-width-bootstrap: var(--container-width-bootstrap-lg);
         --container-padding: var(--container-padding-lg);
-        --peak-width: var(--peak-width-lg);
         --items: var(--items-lg);
         --align: var(--align-lg);
-        --scroll-padding: var(--scroll-padding-lg);
     }
     .scrollRow.scrollRow-bootstrap-lg {
         --container-width: var(--container-width-bootstrap);
-        --container-space: calc((var(--sum-gap) + var(--sum-padding)));
-        --peak-width: var(--container-padding);
-        --item-container-width: calc(var(--container-width));
-        --peak-disabled-opacity: 1;
-        --peak-disabled-width: var(--peak-width);
     }
 }
 
@@ -185,18 +135,11 @@
         --container-width: var(--container-width-xl);
         --container-width-bootstrap: var(--container-width-bootstrap-xl);
         --container-padding: var(--container-padding-xl);
-        --peak-width: var(--peak-width-xl);
         --items: var(--items-xl);
         --align: var(--align-xl);
-        --scroll-padding: var(--scroll-padding-xl);
     }
     .scrollRow.scrollRow-bootstrap-xl {
         --container-width: var(--container-width-bootstrap);
-        --container-space: calc((var(--sum-gap) + var(--sum-padding)));
-        --peak-width: var(--container-padding);
-        --item-container-width: calc(var(--container-width));
-        --peak-disabled-opacity: 1;
-        --peak-disabled-width: var(--peak-width);
     }
 }
 
@@ -205,18 +148,11 @@
         --container-width: var(--container-width-xxl);
         --container-width-bootstrap: var(--container-width-bootstrap-xxl);
         --container-padding: var(--container-padding-xxl);
-        --peak-width: var(--peak-width-xxl);
         --items: var(--items-xxl);
         --align: var(--align-xxl);
-        --scroll-padding: var(--scroll-padding-xxl);
     }
     .scrollRow.scrollRow-bootstrap-xxl {
         --container-width: var(--container-width-bootstrap);
-        --container-space: calc((var(--sum-gap) + var(--sum-padding)));
-        --peak-width: var(--container-padding);
-        --item-container-width: calc(var(--container-width));
-        --peak-disabled-opacity: 1;
-        --peak-disabled-width: var(--peak-width);
     }
 }
 
@@ -252,7 +188,7 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    width: var(--peak-width);
+    width: var(--container-padding);
     display: flex;
     align-items: center;
     justify-content: center;
