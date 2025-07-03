@@ -12,11 +12,11 @@
     --container-width: var(--container-width-xs);
 
     --container-width-bootstrap-xs: calc(100% - 1.5rem);
-    --container-width-bootstrap-sm: 540px;
-    --container-width-bootstrap-md: 720px;
-    --container-width-bootstrap-lg: 960px;
-    --container-width-bootstrap-xl: 1140px;
-    --container-width-bootstrap-xxl: 1320px;
+    --container-width-bootstrap-sm: 516px;
+    --container-width-bootstrap-md: 696px;
+    --container-width-bootstrap-lg: 936px;
+    --container-width-bootstrap-xl: 1116px;
+    --container-width-bootstrap-xxl: 1296px;
     --container-width-bootstrap: var(--container-width-bootstrap-xs);
 
     --container-padding-xs: calc((100% - var(--container-width)) /2);
@@ -273,4 +273,13 @@ button.scrollRow_controller_button > svg {
 
 .scrollRow_peak[data-scrollrow-controller-state="disabled"] .scrollRow_controller_button {
     opacity: 0;
+}
+
+
+/* Hide peak on mobile */
+
+@media (max-width: 769px) {
+    .scrollRow_peak {
+        display: none;
+    }
 }
