@@ -291,6 +291,7 @@ button.scrollRow_controller_button > svg {
 .scrollRow_header {
     display: flex;
     gap: 0.5rem;
+    padding: 0 var(--container-padding);
 }
 
 .scrollRow_header [data-scrollrow-controller-state="disabled"] .scrollRow_controller_button {
