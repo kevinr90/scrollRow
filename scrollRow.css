@@ -53,6 +53,7 @@
     --button-colour-hover: #333;
     --arrow-colour: #fff;
     --arrow-colour-hover: #f2cc01;
+    --button-disabled-opacity: 0.5;
 
     --align-xs: center;
     --align-sm: start;
@@ -282,4 +283,16 @@ button.scrollRow_controller_button > svg {
     .scrollRow_peak {
         display: none;
     }
+}
+
+
+/* Header */
+
+.scrollRow_header {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.scrollRow_header [data-scrollrow-controller-state="disabled"] .scrollRow_controller_button {
+    opacity: var(--button-disabled-opacity);
 }
