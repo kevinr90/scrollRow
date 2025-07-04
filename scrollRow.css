@@ -292,13 +292,27 @@ button.scrollRow_controller_button > svg {
 
 /* Header */
 
-.scrollRow_header {
+.scrollRow_header,
+.scrollRow_buttons
+{
     display: flex;
     gap: 0.5rem;
     padding: 0 var(--container-padding);
     align-items: center;
 }
 
-.scrollRow_header [data-scrollrow-controller-state="disabled"] .scrollRow_controller_button {
+.scrollRow_buttons.scrollRow_buttons_hideIfNoScroll
+{
+    display: none;
+}
+
+.scrollRow_buttons.scrollRow_buttons_hideIfNoScroll:has([data-scrollrow-controller-state="enabled"])
+{
+    display: flex;
+}
+
+.scrollRow_header [data-scrollrow-controller-state="disabled"] .scrollRow_controller_button,
+.scrollRow_buttons [data-scrollrow-controller-state="disabled"] .scrollRow_controller_button
+{
     opacity: var(--button-disabled-opacity);
 }
