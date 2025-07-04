@@ -219,8 +219,8 @@
     opacity: var(--peak-opacity-hover);
 }
 
-.scrollRow_controller_button {
-    width: 80%;
+.scrollRow_peak .scrollRow_controller_button {
+    width: 100%;
     max-width: var(--arrow-width);
     aspect-ratio: 1 / 1;
     border-radius: 50%;
@@ -233,6 +233,10 @@
     justify-content: center;
     background: var(--button-colour);
     color: var(--arrow-colour);
+}
+
+.scrollRow_controller_button {
+    width: 80%;
 }
 
 .scrollRow_controller_button:hover {
