@@ -41,7 +41,7 @@
 
     --peak-disabled-opacity: 0;
 
-    --arrow-width-xs: 2.5rem;
+    --arrow-width-xs: 2rem;
     --arrow-width-sm: var(--arrow-width-xs);
     --arrow-width-md: var(--arrow-width-sm);
     --arrow-width-lg: var(--arrow-width-md);
@@ -49,8 +49,8 @@
     --arrow-width-xxl: var(--arrow-width-xl);
     --arrow-width: var(--arrow-width-xs);
 
-    --button-colour: #333;
-    --button-colour-hover: #333;
+    --button-colour: #444;
+    --button-colour-hover: #444;
     --arrow-colour: #fff;
     --arrow-colour-hover: #f2cc01;
     --button-disabled-opacity: 0.5;
@@ -220,8 +220,7 @@
 }
 
 .scrollRow_controller_button {
-    width: 100%;
-    max-width: var(--arrow-width);
+    width: var(--arrow-width);
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     border: none;
