@@ -53,7 +53,10 @@
     --button-colour-hover: #444;
     --arrow-colour: #fff;
     --arrow-colour-hover: #f2cc01;
+    --arrow-border: #666;
+    --arrow-border-hover: #666;
     --button-disabled-opacity: 0.5;
+    --buttons-sticky-offset: 110px;
 
     --align-xs: center;
     --align-sm: start;
@@ -231,6 +234,7 @@
     justify-content: center;
     background: var(--button-colour);
     color: var(--arrow-colour);
+    border: 1px solid var(--arrow-border);
 }
 
 scrollRow_peak .scrollRow_controller_button {
@@ -240,6 +244,7 @@ scrollRow_peak .scrollRow_controller_button {
 .scrollRow_controller_button:hover {
     background: var(--button-colour-hover);
     color: var(--arrow-colour-hover);
+    border-color: var(--arrow-border-hover);
 }
 
 button.scrollRow_controller_button > svg {
@@ -297,6 +302,12 @@ button.scrollRow_controller_button > svg {
     gap: 0.5rem;
     padding: 0 var(--container-padding);
     align-items: center;
+}
+
+.scrollRow.stickyButtons .scrollRow_buttons {
+    position: sticky;
+    top: var(--buttons-sticky-offset);
+    z-index: 2;
 }
 
 .scrollRow_buttons.scrollRow_buttons_hideIfNoScroll
