@@ -311,8 +311,8 @@ button.scrollRow_controller_button > svg {
 {
     display: flex;
     gap: 0.5rem;
-    padding: 0 0.75rem;
-    padding: 0 0.75rem;
+    padding: 0 var(--container-padding);
+    justify-content: end;
     align-items: center;
 }
 
