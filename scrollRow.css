@@ -80,7 +80,6 @@
 }
 
 /* Hide scrollbars */
-
 .scrollRow_inner { 
     scrollbar-width: none;
     -ms-overflow-style: none; 
@@ -89,6 +88,10 @@
 .scrollRow_inner::-webkit-scrollbar-button { display: none; }
 
 /* Styles */
+
+.scrollRow {
+    display: grid;
+}
 
 .scrollRow.scrollRow-bootstrap {
     --container-width: var(--container-width-bootstrap);
@@ -295,12 +298,21 @@ button.scrollRow_controller_button > svg {
 
 /* Header */
 
+.scrollRow_inner {
+    order: 1;
+}
+
+.scrollRow_buttons {
+    order: 2;
+}
+
 .scrollRow_header,
 .scrollRow_buttons
 {
     display: flex;
     gap: 0.5rem;
-    padding: 0 var(--container-padding);
+    padding: 0 1rem;
+    padding: 0 var(--bs-gutter-x);
     align-items: center;
 }
 
