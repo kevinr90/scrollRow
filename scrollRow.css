@@ -104,6 +104,7 @@
         --container-padding: var(--container-padding-sm);
         --items: var(--items-sm);
         --align: var(--align-sm);
+        --gap: var(--gap-sm);
     }
     .scrollRow.scrollRow-bootstrap-sm {
         --container-width: var(--container-width-bootstrap);
@@ -117,6 +118,7 @@
         --container-padding: var(--container-padding-md);
         --items: var(--items-md);
         --align: var(--align-md);
+        --gap: var(--gap-md);
     }
     .scrollRow.scrollRow-bootstrap-md {
         --container-width: var(--container-width-bootstrap);
@@ -130,6 +132,7 @@
         --container-padding: var(--container-padding-lg);
         --items: var(--items-lg);
         --align: var(--align-lg);
+        --gap: var(--gap-lg);
     }
     .scrollRow.scrollRow-bootstrap-lg {
         --container-width: var(--container-width-bootstrap);
@@ -143,6 +146,7 @@
         --container-padding: var(--container-padding-xl);
         --items: var(--items-xl);
         --align: var(--align-xl);
+        --gap: var(--gap-xl);
     }
     .scrollRow.scrollRow-bootstrap-xl {
         --container-width: var(--container-width-bootstrap);
@@ -156,6 +160,7 @@
         --container-padding: var(--container-padding-xxl);
         --items: var(--items-xxl);
         --align: var(--align-xxl);
+        --gap: var(--gap-xxl;
     }
     .scrollRow.scrollRow-bootstrap-xxl {
         --container-width: var(--container-width-bootstrap);
