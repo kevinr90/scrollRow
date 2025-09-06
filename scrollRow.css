@@ -160,7 +160,7 @@
         --container-padding: var(--container-padding-xxl);
         --items: var(--items-xxl);
         --align: var(--align-xxl);
-        --gap: var(--gap-xxl;
+        --gap: var(--gap-xxl);
     }
     .scrollRow.scrollRow-bootstrap-xxl {
         --container-width: var(--container-width-bootstrap);
