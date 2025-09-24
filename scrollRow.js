@@ -1,4 +1,16 @@
 (function() {
+  // Find first visible .scrollRow_col
+  function getFirstVisibleCol(containerInnerEl) {
+    const cols = containerInnerEl.querySelectorAll('.scrollRow_col');
+    for (let i = 0; i < cols.length; i++) {
+      const el = cols[i];
+      if (el.offsetParent !== null) { // visible (not display:none or inside hidden parent)
+        return el;
+      }
+    }
+    return null;
+  }
+  // Scroll function
   var scrollSnapDoScroll = function(e) {
     var clickEl = e.target;
     var controllerEl = clickEl.closest('.scrollRow_controller')
@@ -6,7 +18,7 @@
     if (controllerEl.dataset.scrollrowControllerDirection == 'left') { direction = 'left' }
     var containerEl = controllerEl.closest('.scrollRow')
     var containerInnerEl = containerEl.querySelector('.scrollRow_inner')
-    var itemEl = containerInnerEl.querySelector('.scrollRow_col')
+    var itemEl = getFirstVisibleCol(containerInnerEl);
     
     // Getwidth
     var width = 300
