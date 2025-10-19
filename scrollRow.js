@@ -11,29 +11,93 @@
     return null;
   }
   // Scroll function
-  var scrollSnapDoScroll = function(e) {
-    var clickEl = e.target;
-    var controllerEl = clickEl.closest('.scrollRow_controller')
-    var direction = 'right'
-    if (controllerEl.dataset.scrollrowControllerDirection == 'left') { direction = 'left' }
-    var containerEl = controllerEl.closest('.scrollRow')
-    var containerInnerEl = containerEl.querySelector('.scrollRow_inner')
-    var itemEl = getFirstVisibleCol(containerInnerEl);
-    
-    // Getwidth
-    var width = 300
-    if(itemEl) {
-        width = itemEl.offsetWidth
+  // Attach listener for right and left peaks
+document.addEventListener('click', function (e) {
+  const peakRight = e.target.closest('.scrollRow_peak-right');
+  const peakLeft = e.target.closest('.scrollRow_peak-left');
+  if (peakRight || peakLeft) {
+    console.log(`🟢 Clicked ${peakRight ? 'RIGHT' : 'LEFT'} peak`);
+    scrollSnapDoScroll(e, peakRight ? 'right' : 'left');
+  }
+});
+
+function scrollSnapDoScroll(e, forcedDirection = null) {
+  var clickEl = e.target;
+  var controllerEl = clickEl.closest('.scrollRow_controller');
+  var direction =
+    forcedDirection ||
+    (controllerEl?.dataset.scrollrowControllerDirection === 'left'
+      ? 'left'
+      : 'right');
+
+  var containerEl = controllerEl
+    ? controllerEl.closest('.scrollRow')
+    : clickEl.closest('.scrollRow');
+  var containerInnerEl = containerEl.querySelector('.scrollRow_inner');
+
+  // Sort items by visual order (for CSS order safety)
+  var items = Array.from(containerInnerEl.children).sort(
+    (a, b) => a.offsetLeft - b.offsetLeft
+  );
+
+  var style = getComputedStyle(containerInnerEl);
+  var paddingLeft = parseFloat(style.paddingLeft) || 0;
+  var paddingRight = parseFloat(style.paddingRight) || 0;
+
+  var visibleStart = containerInnerEl.scrollLeft + paddingLeft;
+  var visibleEnd =
+    containerInnerEl.scrollLeft + containerInnerEl.clientWidth - paddingRight;
+
+  let itemEl = null;
+
+  if (direction === 'right') {
+    // ➡️ find first item inside or after visible frame
+    for (let i = 0; i < items.length; i++) {
+      const itemStart = items[i].offsetLeft;
+      const itemEnd = itemStart + items[i].offsetWidth;
+      if (itemEnd > visibleStart) {
+        itemEl = items[i];
+        break;
+      }
     }
-    
-    // Change
-    if(direction == 'right') {
-        containerInnerEl.scrollLeft += width;
-    }
-    else if(direction == 'left') {
-        containerInnerEl.scrollLeft -= width;
+  } else {
+    // ⬅️ find last item *before* the visible start
+    for (let i = items.length - 1; i >= 0; i--) {
+      const itemStart = items[i].offsetLeft;
+      const itemEnd = itemStart + items[i].offsetWidth;
+      if (itemStart < visibleStart - 1) {
+        itemEl = items[i];
+        break;
+      }
     }
   }
+
+  if (!itemEl) {
+    console.warn('⚠️ No item found for direction:', direction);
+    return;
+  }
+
+  const width = itemEl.offsetWidth;
+
+  // 🔍 Debug output
+  console.group('📜 Scroll Debug');
+  console.log('Direction:', direction);
+  console.log('Item offsetLeft:', itemEl.offsetLeft);
+  console.log('Item width:', width);
+  console.log('Item element:', itemEl);
+  console.groupEnd();
+
+  // Do scroll
+  if (direction === 'right') {
+    containerInnerEl.scrollLeft += width;
+  } else {
+    containerInnerEl.scrollLeft -= width;
+  }
+
+  // Optional: highlight selected item briefly
+  itemEl.style.outline = '2px solid red';
+  setTimeout(() => (itemEl.style.outline = ''), 500);
+}
   
   // Scroll buttons update
   function scrollSnapUpdateButtonState(scrollRowInnerEl) {
