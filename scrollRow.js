@@ -11,16 +11,6 @@
     return null;
   }
   // Scroll function
-  // Attach listener for right and left peaks
-document.addEventListener('click', function (e) {
-  const peakRight = e.target.closest('.scrollRow_peak-right');
-  const peakLeft = e.target.closest('.scrollRow_peak-left');
-  if (peakRight || peakLeft) {
-    console.log(`🟢 Clicked ${peakRight ? 'RIGHT' : 'LEFT'} peak`);
-    scrollSnapDoScroll(e, peakRight ? 'right' : 'left');
-  }
-});
-
 function scrollSnapDoScroll(e, forcedDirection = null) {
   var clickEl = e.target;
   var controllerEl = clickEl.closest('.scrollRow_controller');
@@ -51,7 +41,7 @@ function scrollSnapDoScroll(e, forcedDirection = null) {
   let itemEl = null;
 
   if (direction === 'right') {
-    // ➡️ find first item inside or after visible frame
+    // find first item inside or after visible frame
     for (let i = 0; i < items.length; i++) {
       const itemStart = items[i].offsetLeft;
       const itemEnd = itemStart + items[i].offsetWidth;
@@ -61,7 +51,7 @@ function scrollSnapDoScroll(e, forcedDirection = null) {
       }
     }
   } else {
-    // ⬅️ find last item *before* the visible start
+    // find last item *before* the visible start
     for (let i = items.length - 1; i >= 0; i--) {
       const itemStart = items[i].offsetLeft;
       const itemEnd = itemStart + items[i].offsetWidth;
@@ -93,10 +83,7 @@ function scrollSnapDoScroll(e, forcedDirection = null) {
   } else {
     containerInnerEl.scrollLeft -= width;
   }
-
-  // Optional: highlight selected item briefly
-  itemEl.style.outline = '2px solid red';
-  setTimeout(() => (itemEl.style.outline = ''), 500);
+  
 }
   
   // Scroll buttons update
