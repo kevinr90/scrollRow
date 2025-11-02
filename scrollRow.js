@@ -100,20 +100,26 @@ function scrollSnapDoScroll(e, forcedDirection = null) {
   // Event listeners
   requestAnimationFrame(() => {
     document.querySelectorAll('.scrollRow .scrollRow_controller').forEach(el => {
+      if (!el.dataset.listenerAdded) { // <-- prevent duplicate listeners
         el.addEventListener('click', scrollSnapDoScroll, true);
+        el.dataset.listenerAdded = 'true';
+      }
     });
-    
+  
     document.querySelectorAll('.scrollRow_inner').forEach(scrollRowInnerEl => {
+      if (!scrollRowInnerEl.dataset.listenerAdded) { // <-- same for scroll listener
         let scrollTimeout;
         const handleScrollEnd = () => {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                scrollSnapUpdateButtonState(scrollRowInnerEl);
-            }, 100);
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            scrollSnapUpdateButtonState(scrollRowInnerEl);
+          }, 100);
         };
         scrollSnapUpdateButtonState(scrollRowInnerEl);
         scrollRowInnerEl.addEventListener('scroll', handleScrollEnd);
         window.addEventListener('resize', handleScrollEnd);
+        scrollRowInnerEl.dataset.listenerAdded = 'true';
+      }
     });
   });
 })();
