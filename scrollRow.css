@@ -193,6 +193,7 @@
     flex: var(--item-width);
     scroll-snap-align: var(--align);
     z-index: 1;
+    overflow: hidden;
 }
 
 .scrollRow_peak {
