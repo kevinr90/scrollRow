@@ -1,133 +1,163 @@
 (function() {
-
-  function scrollSnapDoScroll(e, forcedDirection = null) {
-    const clickEl = e.target;
-    const controllerEl = clickEl.closest('.scrollRow_controller');
-    const direction =
-      forcedDirection ||
-      (controllerEl?.dataset.scrollrowControllerDirection === 'left'
-        ? 'left'
-        : 'right');
-
-    const containerEl = controllerEl
-      ? controllerEl.closest('.scrollRow')
-      : clickEl.closest('.scrollRow');
-    const containerInnerEl = containerEl.querySelector('.scrollRow_inner');
-
-    // Get visible items in DOM order
-    const items = Array.from(
-      containerInnerEl.querySelectorAll('.scrollRow_col')
-    ).filter(i => i.offsetParent !== null);
-
-    if (!items.length) return;
-
-    // Find current active item (default to first visible)
-    let currentIndex = items.findIndex(i => i.classList.contains('active'));
-    if (currentIndex === -1) {
-      currentIndex = 0;
-      items[0].classList.add('active');
+  // Find first visible .scrollRow_col
+  function getFirstVisibleCol(containerInnerEl) {
+    const cols = containerInnerEl.querySelectorAll('.scrollRow_col');
+    for (let i = 0; i < cols.length; i++) {
+      const el = cols[i];
+      if (el.offsetParent !== null) { // visible (not display:none or inside hidden parent)
+        return el;
+      }
     }
+    return null;
+  }
+  // Scroll function
+function scrollSnapDoScroll(e, forcedDirection = null) {
+  var clickEl = e.target;
+  var controllerEl = clickEl.closest('.scrollRow_controller');
+  var direction =
+    forcedDirection ||
+    (controllerEl?.dataset.scrollrowControllerDirection === 'left'
+      ? 'left'
+      : 'right');
 
-    // Determine next index
-    let nextIndex = direction === 'right' ? currentIndex + 1 : currentIndex - 1;
+  var containerEl = controllerEl
+    ? controllerEl.closest('.scrollRow')
+    : clickEl.closest('.scrollRow');
+  var containerInnerEl = containerEl.querySelector('.scrollRow_inner');
 
-    // Clamp to valid range
-    if (nextIndex < 0 || nextIndex >= items.length) {
-      console.warn('⚠️ No more visible items in direction:', direction);
+  // Sort items by visual order (for CSS order safety)
+  var items = Array.from(containerInnerEl.children).sort(
+    (a, b) => a.offsetLeft - b.offsetLeft
+  );
+
+  var style = getComputedStyle(containerInnerEl);
+  var paddingLeft = parseFloat(style.paddingLeft) || 0;
+  var paddingRight = parseFloat(style.paddingRight) || 0;
+
+  var visibleStart = containerInnerEl.scrollLeft + paddingLeft;
+  var visibleEnd =
+    containerInnerEl.scrollLeft + containerInnerEl.clientWidth - paddingRight;
+
+  let itemEl = null;
+
+  if (direction === 'right') {
+    // find first item inside or after visible frame
+    for (let i = 0; i < items.length; i++) {
+      const itemStart = items[i].offsetLeft;
+      const itemEnd = itemStart + items[i].offsetWidth;
+      if (itemEnd > visibleStart) {
+        itemEl = items[i];
+        break;
+      }
     }
-
-    // Update active state
-    items[currentIndex].classList.remove('active');
-    items[nextIndex].classList.add('active');
-
-    // Scroll smoothly to next item
-    const nextItem = items[nextIndex];
-    containerInnerEl.scrollTo({
-      left: nextItem.offsetLeft,
-      behavior: 'smooth'
-    });
-
-    // Debug
-    console.group('📜 Scroll Debug');
-    console.log('Direction:', direction);
-    console.log('From index:', currentIndex, '→ To index:', nextIndex);
-    console.log('Active item:', nextItem);
-    console.groupEnd();
-
-    // Update button state after scroll
-    scrollSnapUpdateButtonState(containerInnerEl);
+  } else {
+    // find last item *before* the visible start
+    for (let i = items.length - 1; i >= 0; i--) {
+      const itemStart = items[i].offsetLeft;
+      const itemEnd = itemStart + items[i].offsetWidth;
+      if (itemStart < visibleStart - 1) {
+        itemEl = items[i];
+        break;
+      }
+    }
   }
 
+  if (!itemEl) {
+    console.warn('⚠️ No item found for direction:', direction);
+    return;
+  }
+
+  const width = itemEl.offsetWidth;
+
+  // 🔍 Debug output
+  console.group('📜 Scroll Debug');
+  console.log('Direction:', direction);
+  console.log('Item offsetLeft:', itemEl.offsetLeft);
+  console.log('Item width:', width);
+  console.log('Item element:', itemEl);
+  console.groupEnd();
+
+  // Do scroll
+  if (direction === 'right') {
+    containerInnerEl.scrollLeft += width;
+  } else {
+    containerInnerEl.scrollLeft -= width;
+  }
   
+}
+  
+  // Scroll buttons update
   function scrollSnapUpdateButtonState(scrollRowInnerEl) {
     const containerEl = scrollRowInnerEl.closest('.scrollRow');
-    if (!containerEl) return; // early exit for safety
-  
-    const controllerLeft = containerEl.querySelector('[data-scrollrow-controller-direction="left"]');
-    const controllerRight = containerEl.querySelector('[data-scrollrow-controller-direction="right"]');
-  
+    const controllerLeft = containerEl.querySelector('.scrollRow_controller[data-scrollrow-controller-direction="left"]');
+    const controllerRight = containerEl.querySelector('.scrollRow_controller[data-scrollrow-controller-direction="right"]');
     const scrollLeft = scrollRowInnerEl.scrollLeft;
     const maxScrollLeft = scrollRowInnerEl.scrollWidth - scrollRowInnerEl.clientWidth;
-  
-    const isAtStart = scrollLeft <= 0;
-    const isAtEnd = scrollLeft >= maxScrollLeft - 1;
-  
-    if (controllerLeft) controllerLeft.dataset.scrollrowControllerState = isAtStart ? 'disabled' : 'enabled';
-    if (controllerRight) controllerRight.dataset.scrollrowControllerState = isAtEnd ? 'disabled' : 'enabled';
+    if (controllerLeft) controllerLeft.dataset.scrollrowControllerState = scrollLeft <= 0 ? 'disabled' : 'enabled';
+    if (controllerRight) controllerRight.dataset.scrollrowControllerState = scrollLeft >= maxScrollLeft - 1 ? 'disabled' : 'enabled';
   }
+  
+  // Reorder
+  (function() {
+    document.querySelectorAll('.scrollRow_inner').forEach(container => {
+      const cols = [...container.querySelectorAll('.scrollRow_col')];
+      cols
+        .sort((a, b) => {
+          const getOrder = el => {
+            const match = [...el.classList].find(c => c.startsWith('order-'));
+            return match ? parseInt(match.split('-')[1], 10) : Infinity;
+          };
+          return getOrder(a) - getOrder(b);
+        })
+        .forEach(el => container.appendChild(el));
+    });
 
+  })();
 
-  // Initialize listeners and default active items
+  // Event listeners
   requestAnimationFrame(() => {
-
-    // Reorder
-    (function() {
-      document.querySelectorAll('.scrollRow_inner').forEach(container => {
-        const cols = [...container.querySelectorAll('.scrollRow_col')];
-        cols
-          .sort((a, b) => {
-            const orderA = parseInt(a.dataset.order) || Infinity;
-            const orderB = parseInt(b.dataset.order) || Infinity;
-            return orderA - orderB;
-          })
-          .forEach(el => container.appendChild(el));
-      });
-    })();
 
     // Attach listeners
     document.querySelectorAll('.scrollRow .scrollRow_controller').forEach(el => {
-      if (!el.dataset.listenerAdded) {
+      if (!el.dataset.listenerAdded) { // <-- prevent duplicate listeners
         el.addEventListener('click', scrollSnapDoScroll, true);
         el.dataset.listenerAdded = 'true';
       }
     });
-
-    // Mark first item as active
+  
     document.querySelectorAll('.scrollRow_inner').forEach(scrollRowInnerEl => {
-      if (!scrollRowInnerEl.dataset.listenerAdded) {
-        // Find first element not display:none
-        const firstNonHidden = Array.from(
-          scrollRowInnerEl.querySelectorAll('.scrollRow_col')
-        ).find(i => getComputedStyle(i).display !== 'none');
-        if (firstNonHidden) firstNonHidden.classList.add('active');
+      if (!scrollRowInnerEl.dataset.listenerAdded) { // <-- same for scroll listener
+        let scrollTimeout;
+        const handleScrollEnd = () => {
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            scrollSnapUpdateButtonState(scrollRowInnerEl);
+          }, 100);
+        };
         scrollSnapUpdateButtonState(scrollRowInnerEl);
+        scrollRowInnerEl.addEventListener('scroll', handleScrollEnd);
+        window.addEventListener('resize', handleScrollEnd);
         scrollRowInnerEl.dataset.listenerAdded = 'true';
       }
     });
-
   });
-
-  // Manual refresh utilities
-  window.scrollRow = {};
-  window.scrollRow.refreshOne = function(targetEl) {
-    const scrollRowInnerEl = targetEl.querySelector('.scrollRow_inner');
-    if (scrollRowInnerEl) scrollSnapUpdateButtonState(scrollRowInnerEl);
-    return true;
-  };
-  window.scrollRow.refreshAll = function() {
-    document
-      .querySelectorAll('.scrollRow_inner')
-      .forEach(scrollSnapUpdateButtonState);
-  };
-
 })();
+
+window.scrollRow = {}
+window.scrollRow.refreshOne = function(targetEl) {
+  const containerEl = targetEl.closest('.scrollRow');
+  const scrollRowInnerEl = containerEl.querySelector('.scrollRow_inner')
+  const controllerLeft = containerEl.querySelector('.scrollRow_controller[data-scrollrow-controller-direction="left"]');
+  const controllerRight = containerEl.querySelector('.scrollRow_controller[data-scrollrow-controller-direction="right"]');
+  const scrollLeft = scrollRowInnerEl.scrollLeft;
+  const maxScrollLeft = scrollRowInnerEl.scrollWidth - scrollRowInnerEl.clientWidth;
+  if (controllerLeft) controllerLeft.dataset.scrollrowControllerState = scrollLeft <= 0 ? 'disabled' : 'enabled';
+  if (controllerRight) controllerRight.dataset.scrollrowControllerState = scrollLeft >= maxScrollLeft - 1 ? 'disabled' : 'enabled';
+  return true;
+}
+window.scrollRow.refreshAll = function() {
+  var els = document.querySelectorAll('.scrollRow')
+  els.forEach(function(el) {
+    window.scrollRow.refreshOne(el)
+  })  
+}
