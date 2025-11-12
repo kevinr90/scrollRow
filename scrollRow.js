@@ -60,31 +60,22 @@
   }
 
   function scrollSnapUpdateButtonState(scrollRowInnerEl) {
-    const containerEl = scrollRowInnerEl.closest('.scrollRow');
-    const controllerLeft = containerEl.querySelector(
-      '.scrollRow_controller[data-scrollrow-controller-direction="left"]'
-    );
-    const controllerRight = containerEl.querySelector(
-      '.scrollRow_controller[data-scrollrow-controller-direction="right"]'
-    );
+  const containerEl = scrollRowInnerEl.closest('.scrollRow');
+  if (!containerEl) return; // early exit for safety
 
-    const items = Array.from(
-      scrollRowInnerEl.querySelectorAll('.scrollRow_col')
-    ).filter(i => i.offsetParent !== null);
+  const controllerLeft = containerEl.querySelector('[data-scrollrow-controller-direction="left"]');
+  const controllerRight = containerEl.querySelector('[data-scrollrow-controller-direction="right"]');
 
-    const activeIndex = items.findIndex(i => i.classList.contains('active'));
-    const atStart = activeIndex <= 0;
-    const atEnd = activeIndex >= items.length - 1;
+  const scrollLeft = scrollRowInnerEl.scrollLeft;
+  const maxScrollLeft = scrollRowInnerEl.scrollWidth - scrollRowInnerEl.clientWidth;
 
-    if (controllerLeft)
-      controllerLeft.dataset.scrollrowControllerState = atStart
-        ? 'disabled'
-        : 'enabled';
-    if (controllerRight)
-      controllerRight.dataset.scrollrowControllerState = atEnd
-        ? 'disabled'
-        : 'enabled';
-  }
+  const isAtStart = scrollLeft <= 0;
+  const isAtEnd = scrollLeft >= maxScrollLeft - 1;
+
+  if (controllerLeft) controllerLeft.dataset.scrollrowControllerState = isAtStart ? 'disabled' : 'enabled';
+  if (controllerRight) controllerRight.dataset.scrollrowControllerState = isAtEnd ? 'disabled' : 'enabled';
+}
+
 
   // Initialize listeners and default active items
   requestAnimationFrame(() => {
