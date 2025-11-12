@@ -59,26 +59,43 @@
     scrollSnapUpdateButtonState(containerInnerEl);
   }
 
+  
   function scrollSnapUpdateButtonState(scrollRowInnerEl) {
-  const containerEl = scrollRowInnerEl.closest('.scrollRow');
-  if (!containerEl) return; // early exit for safety
-
-  const controllerLeft = containerEl.querySelector('[data-scrollrow-controller-direction="left"]');
-  const controllerRight = containerEl.querySelector('[data-scrollrow-controller-direction="right"]');
-
-  const scrollLeft = scrollRowInnerEl.scrollLeft;
-  const maxScrollLeft = scrollRowInnerEl.scrollWidth - scrollRowInnerEl.clientWidth;
-
-  const isAtStart = scrollLeft <= 0;
-  const isAtEnd = scrollLeft >= maxScrollLeft - 1;
-
-  if (controllerLeft) controllerLeft.dataset.scrollrowControllerState = isAtStart ? 'disabled' : 'enabled';
-  if (controllerRight) controllerRight.dataset.scrollrowControllerState = isAtEnd ? 'disabled' : 'enabled';
-}
+    const containerEl = scrollRowInnerEl.closest('.scrollRow');
+    if (!containerEl) return; // early exit for safety
+  
+    const controllerLeft = containerEl.querySelector('[data-scrollrow-controller-direction="left"]');
+    const controllerRight = containerEl.querySelector('[data-scrollrow-controller-direction="right"]');
+  
+    const scrollLeft = scrollRowInnerEl.scrollLeft;
+    const maxScrollLeft = scrollRowInnerEl.scrollWidth - scrollRowInnerEl.clientWidth;
+  
+    const isAtStart = scrollLeft <= 0;
+    const isAtEnd = scrollLeft >= maxScrollLeft - 1;
+  
+    if (controllerLeft) controllerLeft.dataset.scrollrowControllerState = isAtStart ? 'disabled' : 'enabled';
+    if (controllerRight) controllerRight.dataset.scrollrowControllerState = isAtEnd ? 'disabled' : 'enabled';
+  }
 
 
   // Initialize listeners and default active items
   requestAnimationFrame(() => {
+
+    // Reorder
+    (function() {
+      document.querySelectorAll('.scrollRow_inner').forEach(container => {
+        const cols = [...container.querySelectorAll('.scrollRow_col')];
+        cols
+          .sort((a, b) => {
+            const orderA = parseInt(a.dataset.order) || Infinity;
+            const orderB = parseInt(b.dataset.order) || Infinity;
+            return orderA - orderB;
+          })
+          .forEach(el => container.appendChild(el));
+      });
+    })();
+
+    // Attach listeners
     document.querySelectorAll('.scrollRow .scrollRow_controller').forEach(el => {
       if (!el.dataset.listenerAdded) {
         el.addEventListener('click', scrollSnapDoScroll, true);
@@ -86,18 +103,19 @@
       }
     });
 
+    // Mark first item as active
     document.querySelectorAll('.scrollRow_inner').forEach(scrollRowInnerEl => {
       if (!scrollRowInnerEl.dataset.listenerAdded) {
-        // Mark first visible item as active
-        const firstVisible = Array.from(
+        // Find first element not display:none
+        const firstNonHidden = Array.from(
           scrollRowInnerEl.querySelectorAll('.scrollRow_col')
-        ).find(i => i.offsetParent !== null);
-        if (firstVisible) firstVisible.classList.add('active');
-
+        ).find(i => getComputedStyle(i).display !== 'none');
+        if (firstNonHidden) firstNonHidden.classList.add('active');
         scrollSnapUpdateButtonState(scrollRowInnerEl);
         scrollRowInnerEl.dataset.listenerAdded = 'true';
       }
     });
+
   });
 
   // Manual refresh utilities
