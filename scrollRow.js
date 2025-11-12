@@ -34,7 +34,6 @@
     // Clamp to valid range
     if (nextIndex < 0 || nextIndex >= items.length) {
       console.warn('⚠️ No more visible items in direction:', direction);
-      return;
     }
 
     // Update active state
